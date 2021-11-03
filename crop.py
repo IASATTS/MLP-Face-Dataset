@@ -7,12 +7,14 @@ import os.path
 ponies = pd.read_csv("derpi_faces.csv")
 def pad_img(img, size=512):
     img = img.convert('RGBA')
+    #img = img.convert('RGB')
     width, height = img.size
     if width > height:
         new_width = size
         new_height = new_width * height // width
         image = img.resize((new_width, new_height), resample=Image.ANTIALIAS)
         new_image = Image.new('RGBA', (size, size), (0, 0, 0, 0))
+        #new_image = Image.new('RGB', (size, size), (255, 255, 255))
         upper = (size - image.size[1]) // 2
         new_image.paste(image, (0, upper))
         return new_image
@@ -21,6 +23,7 @@ def pad_img(img, size=512):
         new_width = new_height * width // height
         image = img.resize((new_width, new_height), resample=Image.ANTIALIAS)
         new_image = Image.new('RGBA', (size, size), (0, 0, 0, 0))
+        #new_image = Image.new('RGB', (size, size), (255, 255, 255))
         left = (size - image.size[0]) // 2
         new_image.paste(image, (left, 0))
         return new_image
@@ -61,7 +64,7 @@ def crop(row):
         except Exception as inst:
           print("Error", inst)
 
-path = "./crop/"
+path = "./images/crop/"
 ponies = ponies.sample(frac=1).reset_index(drop=True)
 
 try:

@@ -1,0 +1,4 @@
+derpi_faces.csv = only TS solo url (removed any labels that had other characters than TS)
+derpi_faces_no_ts.csv = only no TS : (removed any labels that had TS)
+
+Note : The only images missing from the combination of both the above .csv files = pictures that had botrh TS and other characters.
