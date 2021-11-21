@@ -25,6 +25,18 @@ def create_dataset_folders():
 def create_folder(path):
     os.makedirs(path, exist_ok=False)
 
+ #Find the image corresponding to the given label.
+def getImageFromFilename(filename):
+    image_name = filename.split(".")[0]
+    
+    # Try to find a matching image for the label, continue the loop if no match is found.
+    matchingImages = glob.glob(pathImages + image_name + ".*")
+    
+    if (len(matchingImages) == 0):
+        return None
+    
+    return matchingImages[0]
+
 # -------------------------
 # Sepparate in 3 datasets
 # -------------------------
@@ -67,14 +79,11 @@ x = 0
 # Separate the dataset into folder using the chosen split
 print("Separate into folders")
 for labelFileName, labelPath in labels: 
-    imageName = labelFileName.split(".")[0]
-    
-    # Try to find a matching image for the label, continue the loop if no match is found.
-    matchingImages = glob.glob(pathImages + imageName + ".*")
-    if (len(matchingImages) == 0):
-        continue
-    
-    imageFilePath = matchingImages[0]
+    #Find the image corresponding to the given label.
+    imageFilePath = getImageFromFilename(labelFileName)
+    if (imageFilePath is None):
+        continue   
+
     imageFileName = os.path.basename(imageFilePath)
     
     if(x < train_size):
